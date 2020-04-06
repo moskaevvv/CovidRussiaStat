@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app" id="app">
+
+    </div>
+
+    <script>
+        let url = 'https://meduza.io/embed/covid-map/data/api%2Fg4%2Fcovid_data%2Frecent_map_data';
+        var xhr = new XMLHttpRequest();
+        let meduzaData;
+        let russianData;
+        let maxGraph = 0;
+        let appText = '';
+        let datesList = [];
+        let app = document.querySelector('#app');
+        xhr.open('GET', url, false);
+        xhr.send();
+        if (xhr.status != 200) {
+          alert(xhr.status + ': ' + xhr.statusText);
+        } else {
+            meduzaData = JSON.parse(xhr.responseText);
+        }
+
+        for (i = 0; i < meduzaData.data_by_location.length; i++) {
+            if(meduzaData.data_by_location[i].title == 'Россия') {
+                russianData = meduzaData.data_by_location[i].data;
+            };
+        }
+
+        for (let key in russianData) {
+            datesList.push(key);
+        }
+
+        for (i = (datesList.length - 1); i > 0; i--) {
+            russianData[datesList[i]].confirmedDelta = russianData[datesList[i]].confirmed - russianData[datesList[i-1]].confirmed;
+            if (russianData[datesList[i]].confirmedDelta > maxGraph) {
+                maxGraph = russianData[datesList[i]].confirmedDelta;
+            }
+        }
+
+        console.log(russianData);
+        let chartPoint = app.clientWidth/maxGraph;
+
+        for (i = (datesList.length - 1); i > 0; i--) {
+            if (russianData[datesList[i]].confirmedDelta != 0) {
+                let chartItemLength = chartPoint * russianData[datesList[i]].confirmedDelta;
+            appText += `<div class="chart-item">
+                <div class="chart-body" style="width:${chartItemLength}px;"></div>
+                <p class="chart-digit">+${russianData[datesList[i]].confirmedDelta}</p>
+                        </div>`; 
+            }
+        }
+        
+    
+        app.innerHTML = appText;
+  
+
+
+
+
+</script>    
+    
+</body>
+</html>
