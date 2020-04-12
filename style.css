@@ -1,7 +1,8 @@
-@import url('https://fonts.googleapis.com/css?family=Roboto:400,900&display=swap');
-
-html {
-  font-family: 'Roboto', Arial, sans-serif;
+@import url('https://rsms.me/inter/inter.css');
+html { 
+    font-family: 'Inter', sans-serif; 
+    font-feature-settings: "tnum";
+    font-feature-settings: "zero";
 }
 
 body,
@@ -26,21 +27,24 @@ main {
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
   font-size: 14px;
+  color: rgba(0, 0, 0, 0.88)
 }
 
 .chart-body {
     height: 4px;
     background-image: linear-gradient(120deg, red 50%, orange 100%);
+    min-width: 1px;
 }
 
 .chart-item {
     position: relative;
-    box-shadow: inset 0px 1px 0px rgba(0, 0, 0, 0.08);
-    padding-bottom: 16px;
+    /*box-shadow: inset 0px 1px 0px rgba(0, 0, 0, 0.08);*/
+    padding-bottom: 2px;
 }
 .app {
     margin: auto;
-    max-width: 800px;
+    max-width: 960px;
+    padding: 0 16px;
 }
 
 .chart-digit {
@@ -48,11 +52,51 @@ main {
     color: #656565;
     opacity: 0.32;
 }
-
-.chart-item:hover .chart-digit {
-    opacity: 1;
+.confirmed-delta-summary {
+    font-weight: 300;
+    max-width: 640px;
+    font-size: 28px;
+    line-height: 1.4;
 }
 
-.chart-item:hover .chart-body {
-    background-image: linear-gradient(120deg, black 30%, orange 100%);
+.counter-digits {
+    font-weight: 800;
+    font-size: 48px;
+    display: block;
+    line-height: 1.1;
+    margin-bottom: 8px;
+}
+
+.summary-block {
+    padding: 32px 0 24px;
+}
+
+.graph-title {
+    text-transform: uppercase;
+    font-weight: 400;
+    letter-spacing: 1px;
+    color: rgba(0, 0, 0, 0.56);
+    margin-bottom: 4px;
+    display: inline-block;
+    margin-right: 12px;
+}
+
+.details-ctrl {
+    text-decoration: none;
+    margin-bottom: 20px;
+    display: inline-block;
+    cursor: pointer;
+    color: blueviolet;
+}
+
+.details-ctrl:hover {
+    color: red;
+}
+
+.chart-body--2 {
+    background-image: linear-gradient(120deg, #13547a 0%,  #80d0c7 100%);
+}
+
+.chart-body--3 {
+    background-image: linear-gradient(120deg, darkgray 00%,  lightgray 100%);
 }

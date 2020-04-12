@@ -16,7 +16,9 @@
         var xhr = new XMLHttpRequest();
         let meduzaData;
         let russianData;
-        let maxGraph = 0;
+        let maxGraph1 = 0;
+        let maxGraph2 = 0;
+        let maxGraph3 = 0;
         let appText = '';
         let datesList = [];
         let app = document.querySelector('#app');
@@ -40,24 +42,83 @@
 
         for (i = (datesList.length - 1); i > 0; i--) {
             russianData[datesList[i]].confirmedDelta = russianData[datesList[i]].confirmed - russianData[datesList[i-1]].confirmed;
-            if (russianData[datesList[i]].confirmedDelta > maxGraph) {
-                maxGraph = russianData[datesList[i]].confirmedDelta;
+            if (russianData[datesList[i]].confirmedDelta > maxGraph1) {
+                maxGraph1= russianData[datesList[i]].confirmedDelta;
             }
         }
+        let chartPoint1 = (app.clientWidth - 32)/maxGraph1;
+        for (i = (datesList.length - 1); i > 0; i--) {
+            if (russianData[datesList[i]].confirmed > maxGraph2) {
+                maxGraph2= russianData[datesList[i]].confirmed;
+            }
+        }
+        let chartPoint2 = (app.clientWidth - 32)/maxGraph2;
+        for (i = (datesList.length - 1); i > 0; i--) {
+            russianData[datesList[i]].deathsDelta = russianData[datesList[i]].deaths - russianData[datesList[i-1]].deaths;
+            if (russianData[datesList[i]].deathsDelta > maxGraph3) {
+                maxGraph3= russianData[datesList[i]].deathsDelta;
+            }
+        }
+        let chartPoint3 = (app.clientWidth - 32)/maxGraph3;
+
+        appText += `<div class="summary-block">
+        <p class="confirmed-delta-summary"><span class="counter-digits">${russianData[datesList[datesList.length - 1]].confirmedDelta} новых случаев</span> заражения коронавирусной инфекцией зарегистрированы в России сегодня (${datesList[datesList.length - 1]}). Это на ${(russianData[datesList[datesList.length - 1]].confirmedDelta)-(russianData[datesList[datesList.length - 2]].confirmedDelta)} больше, чем накануне</p>
+        </div>
+        <ul class="chart">
+        <h3 class="graph-title">Как менялось это число по дням</h3>
+        <div class="details-ctrl">показать детали</div>`
 
         console.log(russianData);
-        let chartPoint = app.clientWidth/maxGraph;
 
         for (i = (datesList.length - 1); i > 0; i--) {
             if (russianData[datesList[i]].confirmedDelta != 0) {
-                let chartItemLength = chartPoint * russianData[datesList[i]].confirmedDelta;
-            appText += `<div class="chart-item">
+                let chartItemLength = chartPoint1 * russianData[datesList[i]].confirmedDelta;
+            appText += `<li class="chart-item">
                 <div class="chart-body" style="width:${chartItemLength}px;"></div>
-                <p class="chart-digit">+${russianData[datesList[i]].confirmedDelta}</p>
-                        </div>`; 
+                <!--<p class="chart-digit">+${russianData[datesList[i]].confirmedDelta}</p>-->
+                        </li>`; 
             }
         }
         
+        appText += `</ul>`
+       
+        appText += `<div class="summary-block">
+        <p class="confirmed-delta-summary"><span class="counter-digits">${russianData[datesList[datesList.length - 1]].confirmed} человек заболели</span> и получили диагноз «Коронавирусная пневмония»</p>
+        </div>
+        <ul class="chart">
+        <h3 class="graph-title">Экспонента заболеваемости</h3>
+        <div class="details-ctrl">показать детали</div>`
+
+        for (i = (datesList.length - 1); i > 0; i--) {
+            if (russianData[datesList[i]].confirmed != 0) {
+                let chartItemLength = chartPoint2 * russianData[datesList[i]].confirmed;
+            appText += `<li class="chart-item">
+                <div class="chart-body chart-body--2" style="width:${chartItemLength}px;"></div>
+                <!--<p class="chart-digit">+${russianData[datesList[i]].confirmed}</p>-->
+                        </li>`; 
+            }
+        }
+        
+        appText += `</ul>`
+
+        appText += `<div class="summary-block">
+        <p class="confirmed-delta-summary"><span class="counter-digits">${russianData[datesList[datesList.length - 1]].deaths} смертей</span> от коронавируса зафиксированы с момента начала эпидемии</p>
+        </div>
+        <ul class="chart">
+        <h3 class="graph-title">сколько человек умирало каждый день</h3>
+        <div class="details-ctrl">показать детали</div>`
+
+        for (i = (datesList.length - 1); i > 0; i--) {
+            if (russianData[datesList[i]].deathsDelta != 0) {
+                let chartItemLength = chartPoint3 * russianData[datesList[i]].deathsDelta;
+            appText += `<li class="chart-item">
+                <div class="chart-body chart-body--3" style="width:${chartItemLength}px;"></div>
+                <!--<p class="chart-digit">+${russianData[datesList[i]].deathsDelta}</p>-->
+                        </li>`; 
+            }
+        }
+        
+        appText += `</ul>`
     
         app.innerHTML = appText;
   
