@@ -66,7 +66,7 @@
         </div>
         <ul class="chart">
         <h3 class="graph-title">Как менялось это число по дням</h3>
-        <div class="details-ctrl">показать детали</div>`
+        <div class="details-ctrl">показать цифры и даты</div>`
 
         console.log(russianData);
 
@@ -83,11 +83,11 @@
         appText += `</ul>`
        
         appText += `<div class="summary-block">
-        <p class="confirmed-delta-summary"><span class="counter-digits">${russianData[datesList[datesList.length - 1]].confirmed} человек заболели</span> и получили диагноз «Коронавирусная пневмония»</p>
+        <p class="confirmed-delta-summary"><span class="counter-digits">${russianData[datesList[datesList.length - 1]].confirmed} человек заболели</span> в РФ с момента начала эпидемии</p>
         </div>
         <ul class="chart">
-        <h3 class="graph-title">Экспонента заболеваемости</h3>
-        <div class="details-ctrl">показать детали</div>`
+        <h3 class="graph-title">Кривая заболеваемости</h3>
+        <div class="details-ctrl">показать цифры и даты</div>`
 
         for (i = (datesList.length - 1); i > 0; i--) {
             if (russianData[datesList[i]].confirmed != 0) {
@@ -102,7 +102,7 @@
         appText += `</ul>`
 
         appText += `<div class="summary-block">
-        <p class="confirmed-delta-summary"><span class="counter-digits">${russianData[datesList[datesList.length - 1]].deaths} смертей</span> от коронавируса зафиксированы с момента начала эпидемии</p>
+        <p class="confirmed-delta-summary"><span class="counter-digits">${russianData[datesList[datesList.length - 1]].deaths} смертей</span> и ${russianData[datesList[datesList.length - 1]].recovered} случев выздоровленя</p>
         </div>
         <ul class="chart">
         <h3 class="graph-title">сколько человек умирало каждый день</h3>
